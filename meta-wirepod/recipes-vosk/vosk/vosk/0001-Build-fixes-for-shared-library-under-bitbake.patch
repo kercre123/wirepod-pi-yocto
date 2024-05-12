@@ -1,0 +1,54 @@
+--- a/Makefile	2024-05-12 13:09:50.428004108 -0500
++++ b/Makefile	2024-05-12 13:20:01.712550881 -0500
+@@ -1,5 +1,6 @@
+ # Locations of the dependencies
+ KALDI_ROOT?=$(HOME)/travis/kaldi
++KALDI_LIBS?=$(HOME)/travis/kaldi/libs
+ OPENFST_ROOT?=$(KALDI_ROOT)/tools/openfst
+ OPENBLAS_ROOT?=$(KALDI_ROOT)/tools/OpenBLAS/install
+ MKL_ROOT?=/opt/intel/mkl
+@@ -34,7 +35,7 @@
+ 	vosk_api.h \
+         postprocessor.h
+ 
+-CFLAGS=-g -O3 -std=c++17 -Wno-deprecated-declarations -fPIC -DFST_NO_DYNAMIC_LINKING -I. -I$(KALDI_ROOT)/src -I$(OPENFST_ROOT)/include $(EXTRA_CFLAGS)
++CFLAGS=-g -O3 -std=c++17 -Wno-deprecated-declarations -fPIC -DFST_NO_DYNAMIC_LINKING -I. -I$(KALDI_ROOT) -I$(OPENFST_ROOT) $(EXTRA_CFLAGS)
+ 
+ LDFLAGS=
+ 
+@@ -61,11 +62,11 @@
+         $(OPENFST_ROOT)/lib/libfstngram.a
+ else
+     LDFLAGS += \
+-        -L$(KALDI_ROOT)/libs \
++        -L$(KALDI_ROOT) \
+         -lkaldi-online2 -lkaldi-decoder -lkaldi-ivector -lkaldi-gmm -lkaldi-tree \
+         -lkaldi-feat -lkaldi-lat -lkaldi-lm -lkaldi-rnnlm -lkaldi-hmm -lkaldi-nnet3 \
+         -lkaldi-transform -lkaldi-cudamatrix -lkaldi-matrix -lkaldi-fstext \
+-        -lkaldi-util -lkaldi-base -lfst -lfstngram
++        -lkaldi-util -lkaldi-base -lfst -lfstngram -shared -Wl,-soname,libvosk.so.0.3.42
+ endif
+ 
+ ifeq ($(HAVE_OPENBLAS_CLAPACK), 1)
+@@ -77,7 +78,8 @@
+             $(OPENBLAS_ROOT)/lib/libblas.a \
+             $(OPENBLAS_ROOT)/lib/libf2c.a
+     else
+-        LDFLAGS += -lopenblas -llapack -lblas -lf2c
++        LDFLAGS += -lopenblas 
++	#-llapack -lblas -lf2c
+     endif
+ endif
+ 
+@@ -104,7 +106,10 @@
+     LDFLAGS += -L$(CUDA_ROOT)/lib64 -lcuda -lcublas -lcusparse -lcudart -lcurand -lcufft -lcusolver -lnvToolsExt
+ endif
+ 
+-all: $(OUTDIR)/libvosk.$(EXT)
++all: $(OUTDIR)/libvosk.$(EXT).0.3.50
++$(OUTDIR)/libvosk.$(EXT).0.3.50: $(OUTDIR)/libvosk.$(EXT)
++	mv libvosk.${EXT} libvosk.${EXT}.0.3.50
++	ln -sf libvosk.${EXT}.0.3.50 libvosk.so
+ 
+ $(OUTDIR)/libvosk.$(EXT): $(VOSK_SOURCES:%.cc=$(OUTDIR)/%.o) $(LIBS)
+ 	$(CXX) --shared -s -o $@ $^ $(LDFLAGS) $(EXTRA_LDFLAGS)

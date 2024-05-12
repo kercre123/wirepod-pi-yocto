@@ -14,6 +14,12 @@ IMAGE_INSTALL += "\
     rsync \
     sudo \
     dpkg \
+    avahi-daemon \
+    avahi-autoipd \
+    vosk \
+    libopus \
+    libsodium \
+    wire-pod \
     ap-wifi-conf \
 "
 
@@ -22,6 +28,7 @@ IMAGE_FEATURES += "ssh-server-openssh"
 IMAGE_LINGUAS = " "
 
 inherit extrausers
+# password: wirepod
 PASSWD="\$5\$BQkNxoSKGuem6Huy\$kYnah7TN1LRsu2WxeC4TeCg5hYa3bHJ11SG4zv.bGA1"
 EXTRA_USERS_PARAMS = "\
     useradd -p '${PASSWD}' -G sudo -s /bin/bash -d /home/wirepod -m wirepod; \

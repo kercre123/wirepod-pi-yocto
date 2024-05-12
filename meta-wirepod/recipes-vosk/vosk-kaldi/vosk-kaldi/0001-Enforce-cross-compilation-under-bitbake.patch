@@ -1,0 +1,23 @@
+From 47f7b9dec92f52e3bd7d497326a2e5d28e3cf10c Mon Sep 17 00:00:00 2001
+From: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+Date: Mon, 11 Jul 2022 16:50:23 +0200
+Subject: [PATCH] Enforce cross-compilation under bitbake
+
+Signed-off-by: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+---
+ src/configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/configure b/src/configure
+index c74d67af8..2aaf541c3 100755
+--- a/src/configure
++++ b/src/configure
+@@ -232,7 +232,7 @@ You need $supported_compiler."
+ 
+ function check_for_slow_expf {
+   # We cannot run this test if we are cross compiling.
+-  if [[ "$TARGET_ARCH" == "`uname -m`" ]] ; then
++  if false ; then
+     ( cd probe
+       rm -f exp-test
+       make -f Makefile.slow_expf 1>/dev/null

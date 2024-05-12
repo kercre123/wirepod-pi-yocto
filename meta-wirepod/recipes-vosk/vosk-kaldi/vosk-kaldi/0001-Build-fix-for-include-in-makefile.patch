@@ -1,0 +1,25 @@
+From 29caad5ea644875d7d896836d5c8c67a711b4352 Mon Sep 17 00:00:00 2001
+From: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+Date: Wed, 13 Jul 2022 15:52:29 +0000
+Subject: [PATCH] Build fix for include in makefile
+
+There is a conflict when using -isystem and bitbake's own flags.
+
+Signed-off-by: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+---
+ src/makefiles/linux_openblas.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/makefiles/linux_openblas.mk b/src/makefiles/linux_openblas.mk
+index 1ac67c355..bb15f84a5 100644
+--- a/src/makefiles/linux_openblas.mk
++++ b/src/makefiles/linux_openblas.mk
+@@ -19,7 +19,7 @@ ifndef OPENBLASLIBS
+ $(error OPENBLASLIBS not defined.)
+ endif
+ 
+-CXXFLAGS = -std=c++17 -I.. -isystem $(OPENFSTINC) -O1 $(EXTRA_CXXFLAGS) \
++CXXFLAGS = -std=c++17 -I.. -I $(OPENFSTINC) -O1 $(EXTRA_CXXFLAGS) \
+            -Wall -Wno-sign-compare -Wno-unused-local-typedefs \
+            -Wno-deprecated-declarations -Winit-self \
+            -DKALDI_DOUBLEPRECISION=$(DOUBLE_PRECISION) \

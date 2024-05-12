@@ -1,0 +1,95 @@
+From 4fc5d1df4dca9b7faaf630d43b32a85d80d16eb3 Mon Sep 17 00:00:00 2001
+From: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+Date: Thu, 14 Jul 2022 11:00:07 +0000
+Subject: [PATCH] Fixes for shared library compilation
+
+Signed-off-by: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+---
+ src/configure                   | 2 +-
+ src/fstbin/Makefile             | 3 ++-
+ src/latbin/Makefile             | 3 ++-
+ src/makefiles/linux_openblas.mk | 2 +-
+ src/matrix/Makefile             | 2 +-
+ src/rnnlmbin/Makefile           | 2 +-
+ 6 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/src/configure b/configure
+index c74d67af8..2aaf541c3 100755
+--- a/configure
++++ b/configure
+@@ -232,7 +232,7 @@ You need $supported_compiler."
+ 
+ function check_for_slow_expf {
+   # We cannot run this test if we are cross compiling.
+-  if [[ "$TARGET_ARCH" == "`uname -m`" ]] ; then
++  if false ; then
+     ( cd probe
+       rm -f exp-test
+       make -f Makefile.slow_expf 1>/dev/null
+diff --git a/fstbin/Makefile b/fstbin/Makefile
+index a22c014a7..5a29030c3 100644
+--- a/fstbin/Makefile
++++ b/fstbin/Makefile
+@@ -26,6 +26,7 @@ TESTFILES =
+ LIBFILE =
+ 
+ ADDLIBS = ../decoder/kaldi-decoder.a ../fstext/kaldi-fstext.a \
+-          ../util/kaldi-util.a ../matrix/kaldi-matrix.a ../base/kaldi-base.a 
++          ../util/kaldi-util.a ../matrix/kaldi-matrix.a ../base/kaldi-base.a \
++          ../hmm/kaldi-hmm.a ../lat/kaldi-lat.a ../tree/kaldi-tree.a
+ 
+ include ../makefiles/default_rules.mk
+diff --git a/latbin/Makefile b/latbin/Makefile
+index d5cc4d035..902bf1058 100644
+--- a/latbin/Makefile
++++ b/latbin/Makefile
+@@ -36,6 +36,7 @@ TESTFILES =
+ ADDLIBS = ../rnnlm/kaldi-rnnlm.a ../nnet3/kaldi-nnet3.a \
+           ../cudamatrix/kaldi-cudamatrix.a ../lat/kaldi-lat.a ../lm/kaldi-lm.a \
+           ../fstext/kaldi-fstext.a ../hmm/kaldi-hmm.a ../tree/kaldi-tree.a \
+-          ../util/kaldi-util.a ../matrix/kaldi-matrix.a ../base/kaldi-base.a 
++          ../util/kaldi-util.a ../matrix/kaldi-matrix.a ../base/kaldi-base.a \
++          ../chain/kaldi-chain.a ../decoder/kaldi-decoder.a
+ 
+ include ../makefiles/default_rules.mk
+diff --git a/makefiles/linux_openblas.mk b/makefiles/linux_openblas.mk
+index 1ac67c355..bb15f84a5 100644
+--- a/makefiles/linux_openblas.mk
++++ b/makefiles/linux_openblas.mk
+@@ -19,7 +19,7 @@ ifndef OPENBLASLIBS
+ $(error OPENBLASLIBS not defined.)
+ endif
+ 
+-CXXFLAGS = -std=c++17 -I.. -isystem $(OPENFSTINC) -O1 $(EXTRA_CXXFLAGS) \
++CXXFLAGS = -std=c++17 -I.. -I $(OPENFSTINC) -O1 $(EXTRA_CXXFLAGS) \
+            -Wall -Wno-sign-compare -Wno-unused-local-typedefs \
+            -Wno-deprecated-declarations -Winit-self \
+            -DKALDI_DOUBLEPRECISION=$(DOUBLE_PRECISION) \
+diff --git a/matrix/Makefile b/matrix/Makefile
+index 398179a35..bec14e089 100644
+--- a/matrix/Makefile
++++ b/matrix/Makefile
+@@ -10,7 +10,7 @@ include ../kaldi.mk
+ 
+ # you can uncomment matrix-lib-speed-test if you want to do the speed tests.
+ 
+-TESTFILES = matrix-lib-test sparse-matrix-test numpy-array-test #matrix-lib-speed-test
++#TESTFILES = matrix-lib-test sparse-matrix-test numpy-array-test #matrix-lib-speed-test
+ 
+ OBJFILES = kaldi-matrix.o kaldi-vector.o packed-matrix.o sp-matrix.o tp-matrix.o \
+            matrix-functions.o qr.o srfft.o compressed-matrix.o \
+diff --git a/rnnlmbin/Makefile b/rnnlmbin/Makefile
+index 23a8eba61..d801b90d8 100644
+--- a/rnnlmbin/Makefile
++++ b/rnnlmbin/Makefile
+@@ -21,6 +21,6 @@ ADDLIBS = ../rnnlm/kaldi-rnnlm.a ../nnet3/kaldi-nnet3.a \
+           ../lat/kaldi-lat.a ../lm/kaldi-lm.a ../fstext/kaldi-fstext.a \
+           ../hmm/kaldi-hmm.a ../transform/kaldi-transform.a ../gmm/kaldi-gmm.a \
+           ../tree/kaldi-tree.a ../util/kaldi-util.a ../matrix/kaldi-matrix.a \
+-          ../base/kaldi-base.a 
++          ../base/kaldi-base.a ../chain/kaldi-chain.a
+ 
+ include ../makefiles/default_rules.mk
+-- 
+2.33.0
+
