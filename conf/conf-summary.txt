@@ -1,0 +1,1 @@
+wirepod-image will build an image with WirePod (eventually).

@@ -1,0 +1,12 @@
+[Unit]
+Description=Create uap0 interface
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/ap_setup.sh
+ExecStop=/sbin/iw dev uap0 del
+
+[Install]
+WantedBy=multi-user.target

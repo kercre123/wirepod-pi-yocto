@@ -1,0 +1,6 @@
+
+### Shell environment set up for builds. ###
+
+You can now run 'bitbake <target>'
+
+WirePod target: wirepod-image
