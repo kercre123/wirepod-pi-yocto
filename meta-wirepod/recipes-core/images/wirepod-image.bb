@@ -20,8 +20,10 @@ IMAGE_INSTALL += "\
     libopus \
     libsodium \
     nano \
+    iw \
     wire-pod \
     ap-wifi-conf \
+    wifi-web-app \
 "
 
 IMAGE_FEATURES += "ssh-server-openssh"

@@ -1,0 +1,17 @@
+[Unit]
+Description=Wi-Fi config web app
+StartLimitIntervalSec=500
+StartLimitBurst=5
+#Wants=network-online.target
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+WorkingDirectory=/etc/wifi-web-app
+ExecStart=/usr/bin/wifi-web-app
+ExecStartPost=/usr/bin/start-wire-pod.sh
+
+[Install]
+WantedBy=multi-user.target

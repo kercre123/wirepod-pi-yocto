@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WirePod Wi-Fi Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wi-Fi Manager</h1>
+        <div id="step1" class="center">
+            <button id="scanBtn">Click here to start scanning for networks</button>
+        </div>
+        <div id="step2" class="center" style="display:none;">
+            <p>Scanning for networks...</p>
+        </div>
+        <div id="step3" class="center" style="display:none;">
+            <h2>Select a network</h2>
+            <select id="networkSelect">
+                <option value="">Click here to select a network</option>
+            </select>
+        </div>
+        <div id="step4" class="center" style="display:none;">
+            <h2>Enter password for <span id="selectedNetwork"></span></h2>
+            <input type="password" id="password" placeholder="Password">
+            <button id="connectBtn">Connect</button>
+        </div>
+        <div id="step5" class="center" style="display:none;">
+            <p>Connecting to network...</p>
+        </div>
+        <div id="step6" class="center" style="display:none;">
+            <p>Successfully connected to the network! You should now disconnect from this network (WirePod), make sure it is forgotten so your device doesn't reconnect, reconnect to your normal network (same one you just connected this WirePod to), then head to <a href=wirepod.local>wirepod.local</a> in a browser.</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
