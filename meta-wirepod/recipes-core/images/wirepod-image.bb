@@ -19,6 +19,7 @@ IMAGE_INSTALL += "\
     vosk \
     libopus \
     libsodium \
+    nano \
     wire-pod \
     ap-wifi-conf \
 "

@@ -11,12 +11,16 @@ The end goal is to create an image which:
 -	Includes web-based Wi-Fi connection interface
 -	Has network configured so escapepod.local directs to WirePod without multicast needed
 
-So far, it compiles and does run on a Pi. It hosts a network and can connect to a network with NetworkManager. It includes the wire-pod binary and libs, but no service file or webroot so it doesn't work yet.
+So far, it compiles and does run on a Pi. It hosts a network and can connect to a network with NetworkManager. It includes wire-pod, the hostname is wirepod (escapepod.local on the WirePod network also directs to 192.168.4.1), and wire-pod starts at bootup.
+
+Hostname: wirepod
 
 Hosted AP credentials:
 
 -	SSID: WirePod
 -	Password: WirePod123
+-	The Pi's IP is 192.168.4.1. It is accessible at escapepod.local
+
 
 Linux user credentials:
 
