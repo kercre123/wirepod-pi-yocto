@@ -63,13 +63,13 @@ do_install() {
     cp -r ${CH}/stttest.pcm ${D}/etc/wire-pod/
 
     # systemd service
-    install -d ${D}/etc/systemd/system
-    install -m 0755 ${WORKDIR}/wire-pod.service ${D}/etc/systemd/system/wire-pod.service
+    install -d ${D}/usr/lib/systemd/system
+    install -m 0755 ${WORKDIR}/wire-pod.service ${D}/usr/lib/systemd/system/wire-pod.service
     #ln -sf /etc/systemd/system/wire-pod.service ${D}/etc/systemd/system/multi-user.target.wants/wire-pod.service
 }
 
 FILES:${PN} += "${bindir}/wire-pod \
 		/etc/wire-pod \
-		/etc/systemd/system"
+		/usr/lib/systemd/system"
 
 INSANE_SKIP:${PN} = "file-rdeps textrel buildpaths ldflags"

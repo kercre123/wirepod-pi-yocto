@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 	"os/exec"
 	"regexp"
 	"strings"
@@ -72,7 +73,10 @@ func connectHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 
-	DisableSelfStartWirePod()
+	go func() {
+		time.Sleep(time.Second*1)
+		DisableSelfStartWirePod()
+	}()
 }
 
 func DisableSelfStartWirePod() {

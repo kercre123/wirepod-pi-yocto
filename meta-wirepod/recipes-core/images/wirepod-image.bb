@@ -21,6 +21,8 @@ IMAGE_INSTALL += "\
     libsodium \
     nano \
     iw \
+    htop \
+    openssl-bin \
     wire-pod \
     ap-wifi-conf \
     wifi-web-app \
