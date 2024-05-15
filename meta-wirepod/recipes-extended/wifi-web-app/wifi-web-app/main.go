@@ -74,20 +74,25 @@ func connectHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	go func() {
+		os.WriteFile("/etc/wifi-web-app/done", []byte("true"), 0755)
 		time.Sleep(time.Second*1)
 		DisableSelfStartWirePod()
 	}()
 }
 
 func DisableSelfStartWirePod() {
-	fmt.Println("Disabling self, enabling wire-pod, then exiting")
-	exec.Command("/bin/bash", "-c", "systemctl disable wifi-web-app").Run()
-	exec.Command("/bin/bash", "-c", "systemctl enable wire-pod").Run()
-	exec.Command("/bin/bash", "-c", "sync").Run()
+//	fmt.Println("Disabling self, enabling wire-pod, then exiting")
+//	exec.Command("/bin/bash", "-c", "systemctl disable wifi-web-app").Run()
+//	exec.Command("/bin/bash", "-c", "systemctl enable wire-pod").Run()
+//	exec.Command("/bin/bash", "-c", "sync").Run()
 	os.Exit(0)
 }
 
 func main() {
+	if _, err := os.ReadFile("/etc/wifi-web-app/done"); err == nil {
+		fmt.Println("wifi-web-app done already")
+	}
+	os.Chdir("/etc/wifi-web-app")
 	http.HandleFunc("/scan", scanHandler)
 	http.HandleFunc("/connect", connectHandler)
 

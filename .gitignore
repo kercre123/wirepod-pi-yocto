@@ -2,3 +2,6 @@
 /meta-raspberrypi
 /meta-openembedded
 /poky
+/meta-rockchip
+/old-build
+/meta-arm

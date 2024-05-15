@@ -25,6 +25,7 @@ IMAGE_INSTALL += "\
     openssl-bin \
     wire-pod \
     ap-wifi-conf \
+    coreutils \
     wifi-web-app \
 "
 

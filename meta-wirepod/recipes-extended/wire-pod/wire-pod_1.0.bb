@@ -8,7 +8,7 @@ SRC_URI = "git://github.com/kercre123/WirePod.git;branch=main;protocol=https \
 	   file://config.ini \
 	   file://wire-pod.service"
 
-SRCREV = "b627cf39c400a1c1193e45a0e0a78667e08a5988"
+SRCREV = "847d02e02a5536dc1e27cdaed9c06dc091a9eac2"
 
 S = "${WORKDIR}/git"
 
@@ -64,12 +64,14 @@ do_install() {
 
     # systemd service
     install -d ${D}/usr/lib/systemd/system
+    install -d ${D}/etc/systemd/system/multi-user.target.wants
     install -m 0755 ${WORKDIR}/wire-pod.service ${D}/usr/lib/systemd/system/wire-pod.service
-    #ln -sf /etc/systemd/system/wire-pod.service ${D}/etc/systemd/system/multi-user.target.wants/wire-pod.service
+    ln -sf /usr/lib/systemd/system/wire-pod.service ${D}/etc/systemd/system/multi-user.target.wants/wire-pod.service
 }
 
 FILES:${PN} += "${bindir}/wire-pod \
 		/etc/wire-pod \
-		/usr/lib/systemd/system"
+		/usr/lib/systemd/system \
+		/etc/systemd/system/multi-user.target.wants"
 
 INSANE_SKIP:${PN} = "file-rdeps textrel buildpaths ldflags"

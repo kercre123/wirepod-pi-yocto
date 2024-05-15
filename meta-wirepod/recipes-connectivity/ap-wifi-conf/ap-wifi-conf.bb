@@ -6,7 +6,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI = "file://uap0.service \
            file://generate_mac.sh \
            file://ap_setup.sh \
-           file://unmanaged.conf"
+           file://unmanaged.conf \
+	   file://disable-5ghz.conf"
 
 S = "${WORKDIR}"
 
@@ -24,6 +25,7 @@ do_install() {
 
     install -d ${D}${sysconfdir}/NetworkManager/conf.d
     install -m 0644 ${WORKDIR}/unmanaged.conf ${D}${sysconfdir}/NetworkManager/conf.d/
+    install -m 0644 ${WORKDIR}/disable-5ghz.conf ${D}${sysconfdir}/NetworkManager/conf.d/
 
     install -d ${D}${bindir}
     install -m 0755 ${WORKDIR}/generate_mac.sh ${D}${bindir}/

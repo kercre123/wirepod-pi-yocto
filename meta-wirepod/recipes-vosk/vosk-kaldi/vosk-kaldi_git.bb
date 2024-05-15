@@ -20,6 +20,9 @@ ALLOW_EMPTY_${PN} = "1"
 
 MYCONF = "--mathlib=OPENBLAS --static --shared --use-cuda=no --fst-root=${STAGING_INCDIR}/../ --fst-version=1.8.0 --openblas-root=${STAGING_INCDIR}/../ "
 
+#TARGET_CFLAGS += -Wuninitialized
+#TARGET_CFLAGS += -Wmaybe-uninitialized
+
 # remove x86-specific optimizations
 do_configure:prepend:aarch64(){
 sed -i -e "s#-msse -msse2##g" ${S}/makefiles/linux_openblas.mk
@@ -35,6 +38,7 @@ do_configure() {
 }
 
 do_compile() {
+  CXXFLAGS="-Wuninitialized -Wmaybe-uninitialized"
   make ${PARALLEL_MAKE}
 }
 

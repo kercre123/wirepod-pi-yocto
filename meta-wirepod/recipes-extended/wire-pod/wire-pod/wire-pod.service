@@ -10,6 +10,7 @@ Type=simple
 Restart=on-failure
 RestartSec=5s
 WorkingDirectory=/etc/wire-pod
+ExecStartPre=/usr/bin/wifi-web-app
 ExecStart=/usr/bin/wire-pod
 
 [Install]
