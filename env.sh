@@ -1,9 +1,14 @@
 #!/bin/bash
 
 
-if [[ ! -d build ]]; then
-	mkdir -p build
-	cp -r conf build/
+if [[ $1 == "" ]]; then
+	echo "Provide a platform (raspberrypi)"
+	return
+fi
+
+if [[ ! -d $1 ]]; then
+	mkdir -p $1
+	cp -r conf $1/
 fi
 
 function fetch_poky() {

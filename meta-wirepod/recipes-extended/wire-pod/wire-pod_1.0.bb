@@ -8,7 +8,7 @@ SRC_URI = "git://github.com/kercre123/WirePod.git;branch=main;protocol=https \
 	   file://config.ini \
 	   file://wire-pod.service"
 
-SRCREV = "847d02e02a5536dc1e27cdaed9c06dc091a9eac2"
+SRCREV = "d1eedfd7cab23c82dffb79a221f79c4b939f18ab"
 
 S = "${WORKDIR}/git"
 
